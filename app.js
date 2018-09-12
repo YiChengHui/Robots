@@ -4,7 +4,7 @@ const app = require('express')()
 const request = require('superagent')
 const charset = require("superagent-charset");
 //服务地址
-const serverPath = '192.168.1.57'
+const serverPath = 'localhost'
 //服务端口
 const serverPort = '3333'
 charset(request)
