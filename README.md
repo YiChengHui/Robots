@@ -3,11 +3,11 @@
 
 ## 安装依赖
 ```bash
+cd Robots
 npm install
 ```
 ## 启动
 ```bash
-cd Robots
 node ./app.js
 ```
 
