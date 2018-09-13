@@ -3,7 +3,8 @@ const chreeio = require('cheerio')
 const app = require('express')()
 const request = require('superagent')
 const charset = require("superagent-charset");
-//服务地址
+// 服务地址
+// const serverPath = '172.16.0.10'
 const serverPath = 'localhost'
 //服务端口
 const serverPort = '3333'
@@ -41,6 +42,9 @@ app.all('*', function (req, res, next) {
 //请求英雄列表，响应给ajax
 app.get('/herolist', (req, res) => {
     getHeroList().then(data => {
+        data.forEach(item => {
+            item.img = `http://game.gtimg.cn/images/yxzj/img201606/heroimg/${item.ename}/${item.ename}.jpg`
+        });
         res.send(data)
     })
 })
@@ -81,8 +85,10 @@ app.get('/heroDetail/:id', (req, res) => {
         let obj = {
             skill: [],
             difficulty: {},
-            skin: []
+            skin: [],
+            name:''
         }
+        obj.name=$(".cover .cover-name").html()
         //遍历英雄综合指数
         for (let i = 0; i < $('ul.cover-list .ibar').length; i++) {
             let keyI = ['Viability', 'Aggressivity', 'Skill', 'level']
@@ -94,19 +100,20 @@ app.get('/heroDetail/:id', (req, res) => {
         //遍历技能名字
         for (let j = 0; j < $('.skill-show .show-list').length; j++) {
             obj.skill.push({
-                img: 'http:' + $('.skill-u1 li').find('img').attr('src'),
+                img: 'http:' + $('.skill-u1 li').eq([j]).find('img').attr('src'),
                 skillname: $('.skill-show .show-list').eq([j]).find('.skill-name').html(),
                 skilldesc: $('.skill-show .show-list').eq([j]).find('.skill-desc').html(),
                 skilltips: $('.skill-show .show-list').eq([j]).find('.skill-tips').html(),
             })
         }
+        obj.skill=obj.skill.slice(0, -1)
         //遍历英雄皮肤名
         let skinName = $('.pic-pf-list').attr('data-imgname').split('|')
         for (let k = 0; k < skinName.length; k++) {
             obj.skin.push({
                 name: skinName[k],
-                bigskin: `http://game.gtimg.cn/images/yxzj/img201606/skin/hero-info/${heroId}/${heroId}-bigskin-${k+1}.jpg`,
-                smallskin: `http://game.gtimg.cn/images/yxzj/img201606/heroimg/${heroId}/${heroId}-smallskin-${k+1}.jpg`,
+                bigskin: `http://game.gtimg.cn/images/yxzj/img201606/skin/hero-info/${heroId}/${heroId}-bigskin-${k + 1}.jpg`,
+                smallskin: `http://game.gtimg.cn/images/yxzj/img201606/heroimg/${heroId}/${heroId}-smallskin-${k + 1}.jpg`,
             })
         }
         res.send(obj);
