@@ -47,6 +47,7 @@ services run as -- localhost:3333
         -   cname：英雄名字
         -   title：应该最新皮肤名
         -   skin_name：皮肤名
+        -   img：英雄头像
 
 -   英雄详情
 

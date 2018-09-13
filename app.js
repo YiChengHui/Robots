@@ -94,7 +94,7 @@ app.get('/heroDetail/:id', (req, res) => {
         //遍历技能名字
         for (let j = 0; j < $('.skill-show .show-list').length; j++) {
             obj.skill.push({
-                img: 'http://' + $('.skill-u1 li').find('img').attr('src').slice(2),
+                img: 'http:' + $('.skill-u1 li').find('img').attr('src'),
                 skillname: $('.skill-show .show-list').eq([j]).find('.skill-name').html(),
                 skilldesc: $('.skill-show .show-list').eq([j]).find('.skill-desc').html(),
                 skilltips: $('.skill-show .show-list').eq([j]).find('.skill-tips').html(),
