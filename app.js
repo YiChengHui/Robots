@@ -7,10 +7,12 @@ const { baiduModules } = require("./modules/baidu/index");
 const { newsModule } = require("./modules/news/index");
 const { heroModules } = require("./modules/hero/index");
 const { lolModules } = require("./modules/lol/index");
+const { music } = require("./modules/music/index");
 app.use("/", baiduModules);
 app.use("/", newsModule);
 app.use("/", heroModules);
 app.use("/", lolModules);
+app.use("/", music);
 
 // 服务地址
 const serverPath = 'localhost'
