@@ -2,12 +2,12 @@ const axios = require("axios");
 const express = require('express');
 const router = express.Router();
 
-router.get("/lol/list", async (req, res) => {
+router.get("/lol/list", async(req, res) => {
     const { data: { hero } } = await axios.get("https://game.gtimg.cn/images/lol/act/img/js/heroList/hero_list.js")
     res.send(hero)
 })
 
-router.get("/lol/detail", async (req, res) => {
+router.get("/lol/detail", async(req, res) => {
     const name = req.query.name;
     try {
         const { data } = await axios.get(`https://lol.qq.com/biz/hero/${name}.js`);
@@ -16,7 +16,7 @@ router.get("/lol/detail", async (req, res) => {
         res.send({
             code: 200,
             msg: "success",
-            data: obj
+            ...JSON.parse(obj)
         });
     } catch (err) {
         res.send({
